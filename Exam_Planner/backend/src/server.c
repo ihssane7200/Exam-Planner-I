@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h> // for pause()
 
 // ============================================
 // Helper: Send JSON response with CORS
@@ -340,7 +341,10 @@ void server_start(int port)
     printf("  GET  /api/history?user_id=xxx\n");
     printf("[SERVER] Press Enter to stop...\n\n");
 
-    getchar();
+    printf("[SERVER] Running. Press Ctrl+C to stop.\n");
+    fflush(stdout);
+    // Wait indefinitely using pause()
+    pause();
 
     MHD_stop_daemon(daemon);
     printf("[SERVER] Stopped\n");
