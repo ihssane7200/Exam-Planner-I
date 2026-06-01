@@ -1,0 +1,13 @@
+{
+  "user_id": "test123",
+  "user_name": "Ahmed",
+  "subjects": [
+    {
+      "name": "Maths",
+      "chapters": [{ "name": "Algèbre", "difficulty": "difficile" }]
+    }
+  ],
+  "days_remaining": 3,
+  "hours_per_day": 4,
+  "preferences": "Matin"
+}
