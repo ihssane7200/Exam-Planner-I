@@ -36,4 +36,4 @@ EXPOSE 8080
 ENV GROQ_API_KEY="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"
 
 # Start the server
-CMD ["./build/exam_planner", "--serve", "8080"]
+CMD ./build/exam_planner --serve 8080
