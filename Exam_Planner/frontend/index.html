@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Planner - Planning de révision intelligent</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- En-tête -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Exam Planner</span>
+                </div>
+                <nav class="nav">
+                    <a href="#" class="nav-link active" data-page="planner">
+                        <i class="fas fa-plus-circle"></i> Nouveau
+                    </a>
+                    <a href="#" class="nav-link" data-page="history">
+                        <i class="fas fa-history"></i> Historique
+                    </a>
+                </nav>
+                <div class="status" id="statusIndicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Chargement...</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="main">
+        <div class="container">
+
+            <!-- PAGE: Formulaire de génération -->
+            <section id="plannerPage" class="page active">
+                <div class="hero">
+                    <h1>Planifiez vos révisions intelligemment</h1>
+                    <p>Générez un planning de révision optimisé par IA en quelques clics</p>
+                </div>
+
+                <div class="form-container">
+                    <form id="planForm" class="plan-form">
+                        <!-- Section: Paramètres généraux -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-sliders-h"></i> Paramètres généraux</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="totalDays">
+                                        <i class="fas fa-clock"></i>
+                                        Jours avant l'examen
+                                    </label>
+                                    <input type="number" id="totalDays" name="totalDays"
+                                           min="1" max="365" value="14" required>
+                                    <span class="hint">Nombre de jours disponibles pour réviser</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hoursPerDay">
+                                        <i class="fas fa-hourglass-half"></i>
+                                        Heures par jour
+                                    </label>
+                                    <input type="number" id="hoursPerDay" name="hoursPerDay"
+                                           min="0.5" max="24" step="0.5" value="4" required>
+                                    <span class="hint">Heures de révision quotidiennes</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section: Matières -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-book"></i> Matières et chapitres</h3>
+                                <button type="button" id="addSubject" class="btn-add">
+                                    <i class="fas fa-plus"></i> Ajouter une matière
+                                </button>
+                            </div>
+                            <div id="subjectsList" class="subjects-list">
+                                <!-- Les matières seront ajoutées ici dynamiquement -->
+                            </div>
+                        </div>
+
+                        <!-- Bouton de génération -->
+                        <div class="form-actions">
+                            <button type="submit" id="generateBtn" class="btn-generate">
+                                <i class="fas fa-magic"></i>
+                                <span>Générer le planning</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Section: Résultat du planning -->
+                <div id="resultSection" class="result-section hidden">
+                    <div class="result-header">
+                        <h2><i class="fas fa-clipboard-list"></i> Votre planning de révision</h2>
+                        <div class="result-actions">
+                            <button id="savePlanBtn" class="btn-action">
+                                <i class="fas fa-save"></i> Sauvegardé
+                            </button>
+                            <button id="printPlanBtn" class="btn-action">
+                                <i class="fas fa-print"></i> Imprimer
+                            </button>
+                            <button id="newPlanBtn" class="btn-action btn-secondary">
+                                <i class="fas fa-plus"></i> Nouveau
+                            </button>
+                        </div>
+                    </div>
+                    <div id="warningBanner" class="warning-banner hidden">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Ce planning a été généré en mode local (IA non disponible)</span>
+                    </div>
+                    <div id="planContainer" class="plan-container">
+                        <!-- Le planning sera injecté ici -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE: Historique -->
+            <section id="historyPage" class="page">
+                <div class="hero">
+                    <h1>Historique des plannings</h1>
+                    <p>Retrouvez tous vos plannings de révision précédents</p>
+                </div>
+                <div id="historyContainer" class="history-container">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Chargement de l'historique...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="footer">
+        <div class="container">
+            <p>
+                <i class="fas fa-code"></i> Exam Planner v1.0.0 |
+                <i class="fas fa-database"></i> SQLite |
+                <i class="fas fa-robot"></i> Gemini AI |
+                <i class="fas fa-server"></i> Backend C++
+            </p>
+        </div>
+    </footer>
+
+    <!-- Overlay de chargement -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Génération du planning en cours...</p>
+            <span class="loading-sub">L'IA analyse vos matières et crée un planning optimisé</span>
+        </div>
+    </div>
+
+    <!-- Toast notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
